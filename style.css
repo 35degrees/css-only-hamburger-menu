@@ -1,0 +1,102 @@
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+}
+
+:root {
+	--bar-width: 60px;
+	--bar-height: 8px;
+	--hamburger-gap: 6px;
+	--bg-fore: #333;
+	--bg-back: #fff;
+	--hamburger-margin: 5px;
+	--animation-timing: 0.2s ease-in-out;
+	--hamburger-height: calc(
+		(var(--bar-height) * 3 + (var(--hamburger-gap) * 2))
+	);
+}
+
+.hamburger-menu {
+	--x-width: calc(var(--hamburger-height) * 1.41421356237);
+	display: flex;
+	flex-direction: column;
+	gap: var(--hamburger-gap);
+	width: max-content;
+	position: absolute;
+	top: var(--hamburger-margin);
+	left: var(--hamburger-margin);
+	z-index: 2;
+	cursor: pointer;
+}
+
+.hamburger-menu::before,
+.hamburger-menu::after,
+.hamburger-menu input {
+	content: '';
+	width: var(--bar-width);
+	height: var(--bar-height);
+	transform-origin: left center;
+	background-color: var(--bg-fore);
+	border-radius: 9999px;
+	transition: opacity var(--animation-timing), width var(--animation-timing),
+		rotate var(--animation-timing), translate var(--animation-timing),
+		background-color var(--animation-timing);
+}
+
+.hamburger-menu input {
+	appearance: none;
+	padding: 0;
+	margin: 0;
+	outline: none;
+	pointer-events: none;
+}
+
+.hamburger-menu:has(input:checked)::before {
+	rotate: 45deg;
+	width: var(--x-width);
+	translate: 0 calc(var(--bar-height) / -2);
+	background-color: #fff;
+}
+
+.hamburger-menu:has(input:checked)::after {
+	rotate: -45deg;
+	width: var(--x-width);
+	translate: 0 calc(var(--bar-height) / 2);
+	background-color: #fff;
+}
+
+.hamburger-menu input:checked {
+	opacity: 0;
+	width: 0;
+	width: var(--x-width);
+
+}
+
+.hamburger-menu:has(input:focus-visible)::before,
+.hamburger-menu:has(input:focus-visible)::after,
+.hamburger-menu input:focus-visible {
+  border: 1px solid var(--bg-back);
+  box-shadow: 0 0 0 1px var(--bg-fore);
+}
+
+.sidebar {
+	transition: translate var(--animation-timing);
+	translate: -100%;
+	padding: 0.5rem 1rem;
+	padding-top: calc(var(--hamburger-height) + var(--hamburger-margin) + 1rem);
+	background-color: var(--bg-fore);
+	color: var(--bg-back);
+	max-width: 10rem;
+	min-height: 100vh;
+  1
+}
+
+.hamburger-menu:has(input:checked) + .sidebar {
+	translate: 0%;
+}
